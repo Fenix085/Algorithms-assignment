@@ -1,4 +1,5 @@
 #task one: implementation of bubble sort, insertion sort, merge sort and quick sort
+import random
 
 def bubbleSort(arr):
     n = len(arr)
@@ -48,6 +49,32 @@ def merge(l, r):
 
 # ----------------------------------------------------------------
 
+def quickSort(arr, l = 0, r = None):
+    if r is None:
+        r = len(arr) - 1
+    
+    if l < r:
+        pivot_index = random.randint(l, r)
+        arr[pivot_index], arr[r] = arr[r], arr[pivot_index]
+        pivot = arr[r]
+        pivot = partition(arr, l, r)
+        quickSort(arr, l, pivot - 1)
+        quickSort(arr, pivot + 1, r)
+    return arr
+
+def partition(arr, l, r):
+    pivot = arr[r]
+    i = l - 1
+    for j in range(l, r):
+        if arr[j] <= pivot:
+            i += 1
+            arr[i], arr[j] = arr[j], arr[i]
+
+    arr[i + 1], arr[r] = arr[r], arr[i + 1]
+    return i + 1
+
+
+
 
 if __name__ == "__main__":
     arr = [64, 34, 25, 12, 22, 11, 90]
@@ -57,4 +84,6 @@ if __name__ == "__main__":
     fin_arr = insertionSort(arr.copy())
     print("Sorted array:", fin_arr)
     fin_arr = mergeSort(arr.copy())
+    print("Sorted array:", fin_arr)
+    fin_arr = quickSort(arr.copy())
     print("Sorted array:", fin_arr)
