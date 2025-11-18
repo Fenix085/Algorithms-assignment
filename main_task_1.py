@@ -77,13 +77,14 @@ def partition(arr, l, r):
 
 
 if __name__ == "__main__":
-    arr = [64, 34, 25, 12, 22, 11, 90]
+    pass
+    # arr = [64, 34, 25, 12, 22, 11, 90]
 
-    fin_arr = bubbleSort(arr.copy())
-    print("Sorted array:", fin_arr)
-    fin_arr = insertionSort(arr.copy())
-    print("Sorted array:", fin_arr)
-    fin_arr = mergeSort(arr.copy())
-    print("Sorted array:", fin_arr)
-    fin_arr = quickSort(arr.copy())
-    print("Sorted array:", fin_arr)
+    # fin_arr = bubbleSort(arr.copy())
+    # print("Sorted array:", fin_arr)
+    # fin_arr = insertionSort(arr.copy())
+    # print("Sorted array:", fin_arr)
+    # fin_arr = mergeSort(arr.copy())
+    # print("Sorted array:", fin_arr)
+    # fin_arr = quickSort(arr.copy())
+    # print("Sorted array:", fin_arr)
