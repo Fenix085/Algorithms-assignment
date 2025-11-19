@@ -5,7 +5,8 @@ class Sorter:
     def __init__(self):
         pass
 
-    def bubbleSort(self, arr):
+    @staticmethod
+    def bubbleSort(arr):
         n = len(arr)
         for i in range(n):
             for j in range(0, n-i-1):
@@ -13,7 +14,8 @@ class Sorter:
                     arr[j], arr[j+1] = arr[j+1], arr[j]
         return arr
 # ----------------------------------------------------------------
-    def insertionSort(self, arr):
+    @staticmethod
+    def insertionSort(arr):
         for i in range(1, len(arr)):
             key = arr[i]
             j = i - 1
@@ -23,19 +25,21 @@ class Sorter:
             arr[j + 1] = key
         return arr
     # ----------------------------------------------------------------
-    def mergeSort(self, arr):
+    @staticmethod
+    def mergeSort(arr):
         if len(arr) <= 1:
             return arr
         mid = len(arr) // 2
         lHalf = arr[:mid]
         rHalf = arr[mid:]
 
-        sorted_l = self.mergeSort(lHalf)
-        sorted_r = self.mergeSort(rHalf)
+        sorted_l = Sorter.mergeSort(lHalf)
+        sorted_r = Sorter.mergeSort(rHalf)
 
-        return self.merge(sorted_l, sorted_r)
+        return Sorter.merge(sorted_l, sorted_r)
 
-    def merge(self, l, r):
+    @staticmethod
+    def merge(l, r):
         result = []
         i = j = 0
         while i < len(l) and j < len(r):
@@ -53,7 +57,8 @@ class Sorter:
 
     # ----------------------------------------------------------------
 
-    def quickSort(self, arr, l = 0, r = None):
+    @staticmethod
+    def quickSort(arr, l = 0, r = None):
         if r is None:
             r = len(arr) - 1
         
@@ -61,12 +66,13 @@ class Sorter:
             pivot_index = random.randint(l, r)
             arr[pivot_index], arr[r] = arr[r], arr[pivot_index]
             pivot = arr[r]
-            pivot = self.partition(arr, l, r)
-            self.quickSort(arr, l, pivot - 1)
-            self.quickSort(arr, pivot + 1, r)
+            pivot = Sorter.partition(arr, l, r)
+            Sorter.quickSort(arr, l, pivot - 1)
+            Sorter.quickSort(arr, pivot + 1, r)
         return arr
 
-    def partition(self, arr, l, r):
+    @staticmethod
+    def partition(arr, l, r):
         pivot = arr[r]
         i = l - 1
         for j in range(l, r):
