@@ -1,5 +1,6 @@
 #task one: implementation of bubble sort, insertion sort, merge sort and quick sort
 import random
+import time
 
 class Sorter:
     def __init__(self):
@@ -89,17 +90,26 @@ class Sorter:
     def radixSort(arr): #(or another, idk)
         pass
 
+    @staticmethod
+    def miracleSort(arr):
+        while not Sorter.check(arr):
+            time.sleep(1) # wait for a miracle
+        return arr
+    
+    @staticmethod
+    def bogoSort(arr):
+        while not Sorter.check(arr):
+            random.shuffle(arr)
+        return arr
 
+    @staticmethod
+    def check(arr):
+        for i in range(1, len(arr)):
+            if arr[i - 1] > arr[i]:
+                return False
+        return True
 
 if __name__ == "__main__":
     pass
     # arr = [64, 34, 25, 12, 22, 11, 90]
-
-    # fin_arr = bubbleSort(arr.copy())
-    # print("Sorted array:", fin_arr)
-    # fin_arr = insertionSort(arr.copy())
-    # print("Sorted array:", fin_arr)
-    # fin_arr = mergeSort(arr.copy())
-    # print("Sorted array:", fin_arr)
-    # fin_arr = quickSort(arr.copy())
-    # print("Sorted array:", fin_arr)
+    # oSorter = Sorter()
