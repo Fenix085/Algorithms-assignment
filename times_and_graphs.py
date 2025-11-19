@@ -1,7 +1,7 @@
 import time
 import random
 from statistics import mean
-import main_task_1
+import sorter
 import csv
 
 def random_array(n):
@@ -28,10 +28,10 @@ if version.strip() == '2':
 results = { 'bubble': [], 'insertion': [], 'merge': [], 'quick': [] }
 
 for n in sizes:
-    for name, func in [('bubble', main_task_1.bubbleSort),
-                       ('insertion', main_task_1.insertionSort),
-                       ('merge', main_task_1.mergeSort),
-                       ('quick', main_task_1.quickSort)]:
+    for name, func in [('bubble', sorter.bubbleSort),
+                       ('insertion', sorter.insertionSort),
+                       ('merge', sorter.mergeSort),
+                       ('quick', sorter.quickSort)]:
         avg = measure(func, n)
         results[name].append(avg)
         print(f"{name} n={n}: {avg:.6f} s")
