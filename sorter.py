@@ -82,7 +82,12 @@ class Sorter:
 
         arr[i + 1], arr[r] = arr[r], arr[i + 1]
         return i + 1
+    
+    # ----------------------------------------------------------------
 
+    @staticmethod
+    def radixSort(arr): #(or another, idk)
+        pass
 
 
 
