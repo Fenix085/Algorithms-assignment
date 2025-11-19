@@ -21,7 +21,7 @@ def measure(algo, n, reps=30):
 sizes = [5, 10, 20, 50, 100, 200, 500, 1000, 2000]
 sizes_long = [5, 10, 20, 50, 100, 200, 500, 1000, 2000, 5000, 10000, 20000, 50000]
 
-version = input("1 for quick (default), 2 for long (really long, I did maximum for 10000): ")
+version = input("1 for quick (default), 2 for long (really long, I did maximum for 10000, it will have to sort array of 50000 elements 30 times): ")
 if version.strip() == '2':
     sizes = sizes_long
 
