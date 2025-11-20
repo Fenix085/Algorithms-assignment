@@ -88,7 +88,23 @@ class Sorter:
 
     @staticmethod
     def radixSort(arr): #(or another, idk)
-        pass
+        radixArray = [[], [], [], [], [], [], [], [], [], []]
+        maxVal = max(arr)
+        exp = 1
+
+        while maxVal // exp > 0:
+
+            while len(arr) > 0:
+                val = arr.pop()
+                radixIndex = (val // exp) % 10
+                radixArray[radixIndex].append(val)
+
+            for bucket in radixArray:
+                while len(bucket) > 0:
+                    val = bucket.pop()
+                    arr.append(val)
+
+            exp *= 10
 
     @staticmethod
     def miracleSort(arr):
@@ -111,5 +127,7 @@ class Sorter:
 
 if __name__ == "__main__":
     pass
-    # arr = [64, 34, 25, 12, 22, 11, 90]
-    # oSorter = Sorter()
+    arr = [64]
+    oSorter = Sorter()
+    oSorter.radixSort(arr)
+    print("Sorted array is:", arr)
