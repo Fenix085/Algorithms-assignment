@@ -19,6 +19,13 @@ def measure(algo, n, reps=30):
         times.append(end - start)
     return mean(times)
 
+def create_key(row):
+    mm, yyyy = row["Expiry Date"].split('/')
+    year = int(yyyy)
+    month = int(mm)
+    pin = int(row["PIN"])
+    return year * 1000000 + month * 10000 + pin
+
 if __name__ == "__main__":
 
     choice = input("1 - run tests (task1A), 2 - Olsen Gang (task1B): ")
@@ -75,9 +82,18 @@ if __name__ == "__main__":
                         results["quick"][i],
                     ])
         case '2':
+            rows = []
             with open("carddump2.csv", "r") as f:
                 reader = csv.DictReader(f)
                 for row in reader:
-                    exp_date = row['Expiry Date']
-                    pin = row['PIN']
-            # print(rows[0])
+                    rows.append(row)
+            
+            key_row_dict = { create_key(row): row for row in rows }
+            sorted_keys = oSorter.radixSort(list(key_row_dict.keys()))
+            rows = [key_row_dict[k] for k in sorted_keys]
+
+            with open("carddump2_sorted.csv", "w", newline="") as f:
+                filednames = rows[0].keys()
+                writer = csv.DictWriter(f, fieldnames=filednames)
+                writer.writeheader()
+                writer.writerows(rows)

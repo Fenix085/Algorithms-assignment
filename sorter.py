@@ -106,6 +106,8 @@ class Sorter:
 
             exp *= 10
 
+        return arr
+
     @staticmethod
     def miracleSort(arr):
         while not Sorter.check(arr):
@@ -127,7 +129,7 @@ class Sorter:
 
 if __name__ == "__main__":
     pass
-    arr = [64]
-    oSorter = Sorter()
-    oSorter.radixSort(arr)
-    print("Sorted array is:", arr)
+    # arr = [64]
+    # oSorter = Sorter()
+    # oSorter.radixSort(arr)
+    # print("Sorted array is:", arr)
