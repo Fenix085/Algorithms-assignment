@@ -26,6 +26,18 @@ def create_key(row):
     pin = int(row["PIN"])
     return year * 1000000 + month * 10000 + pin
 
+def half_mixer(card_f: str, card_s: str) -> str:
+    """
+    card_f: 'nnnn-nnnn-nnnn-****' (dump1)
+    card_s: '****-****-****-nnnn' (dump2)
+    return: 'nnnn-nnnn-nnnn-nnnn'
+    """
+    parts_f = card_f.split("-")
+    parts_s = card_s.split("-")
+
+    # first 3 groups from first file, last group from second file
+    return "-".join(parts_f[:3] + parts_s[3:])
+
 if __name__ == "__main__":
 
     choice = input("1 - run tests (task1A), 2 - Olsen Gang (task1B): ")
@@ -97,3 +109,38 @@ if __name__ == "__main__":
                 writer = csv.DictWriter(f, fieldnames=filednames)
                 writer.writeheader()
                 writer.writerows(rows)
+
+            # 1. Read dump1 (masked last 4)
+            with open("carddump1.csv", "r", newline="") as f1:
+                reader1 = csv.DictReader(f1)
+                rows1 = list(reader1)
+
+            # 2. Read sorted dump2 (masked first 12, real last 4)
+            with open("carddump2_sorted.csv", "r", newline="") as f2:
+                reader2 = csv.DictReader(f2)
+                rows2 = list(reader2)
+
+            # sanity check
+            if len(rows1) != len(rows2):
+                raise ValueError(f"Row count mismatch: dump1={len(rows1)}, dump2={len(rows2)}")
+
+            # 3. Build final rows
+            output_rows = []
+            for row1, row2 in zip(rows1, rows2):
+                card_f = row1["Credit Card Number"]
+                card_s = row2["Credit Card Number"]
+
+                full_card = half_mixer(card_f, card_s)
+
+                # Take all other fields from dump2 row (has expiry, PIN, CVV, etc.)
+                new_row = row2.copy()
+                new_row["Credit Card Number"] = full_card
+
+                output_rows.append(new_row)
+
+            # 4. Write final CSV
+            with open("carddump_sorted_full.csv", "w", newline="") as f_out:
+                fieldnames = output_rows[0].keys()
+                writer = csv.DictWriter(f_out, fieldnames=fieldnames)
+                writer.writeheader()
+                writer.writerows(output_rows)
