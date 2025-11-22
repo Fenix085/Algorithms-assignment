@@ -1,7 +1,8 @@
+import sorter
+import vector
 import time
 import random
 from statistics import mean
-import sorter
 import csv
 import matplotlib.pyplot as plt
 
@@ -147,4 +148,4 @@ if __name__ == "__main__":
                 writer.writerows(output_rows)
 
         case '3':
-            pass
+            oVector = vector.Vector()
