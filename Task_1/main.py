@@ -49,7 +49,8 @@ if __name__ == "__main__":
             sizes = [0, 1, 2, 5, 10, 20, 50, 100, 200, 500, 1000, 2000]
             sizes_long = [0, 1, 2, 5, 10, 20, 50, 100, 200, 500, 1000, 2000, 5000, 10000, 20000, 50000]
 
-            version = input("1 for quick (default), 2 for long (really long, I did maximum for 10000, it will have to sort array of 50000 elements 30 times): ")
+            version = input("1 - for quick (default), 2 - for long (really long, I did maximum for 10000, it will have to sort array of 50000 elements 30 times),\n" \
+            "3 - for vector implementation: ")
             if version.strip() == '2':
                 sizes = sizes_long
 
@@ -144,3 +145,6 @@ if __name__ == "__main__":
                 writer = csv.DictWriter(f_out, fieldnames=fieldnames)
                 writer.writeheader()
                 writer.writerows(output_rows)
+
+        case '3':
+            pass

@@ -107,25 +107,26 @@ class Sorter:
             exp *= 10
 
         return arr
-
+    # ----------------------------------------------------------------
     @staticmethod
     def miracleSort(arr):
         while not Sorter.check(arr):
             time.sleep(1) # wait for a miracle
         return arr
-    
+    # ----------------------------------------------------------------
     @staticmethod
     def bogoSort(arr):
         while not Sorter.check(arr):
             random.shuffle(arr)
         return arr
-
+    # ----------------------------------------------------------------
     @staticmethod
     def check(arr):
-        for i in range(1, len(arr)):
-            if arr[i - 1] > arr[i]:
-                return False
-        return True
+        # for i in range(1, len(arr)):
+        #     if arr[i - 1] > arr[i]:
+        #         return False
+        # return True
+        return False if any(arr[i - 1] > arr[i] for i in range(1, len(arr))) else True
 
 if __name__ == "__main__":
     pass
