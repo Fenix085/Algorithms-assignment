@@ -88,6 +88,8 @@ class Sorter:
 
     @staticmethod
     def radixSort(arr): #(or another, idk)
+        if len(arr) == 0:
+            return arr
         radixArray = [[], [], [], [], [], [], [], [], [], []]
         maxVal = max(arr)
         exp = 1

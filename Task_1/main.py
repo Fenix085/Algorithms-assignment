@@ -7,13 +7,13 @@ import csv
 import matplotlib.pyplot as plt
 
 def random_array(n):
-    return [random.randint() for _ in range(n)]
+    return [random.randint(-5000, 5000) for _ in range(n)]
 
 def measure(algo, n, reps=30):
     times = []
     for _ in range(reps):
         if algo == oSorter.radixSort:
-            arr = [random.randint(0, 5000000) for _ in range(n)]
+            arr = [random.randint(0, 5000) for _ in range(n)]
         else:
             arr = random_array(n)
         arr_copy = arr[:]
@@ -44,17 +44,17 @@ def half_mixer(card_f: str, card_s: str) -> str:
 
 if __name__ == "__main__":
 
-    choice = input("1 - run tests (task1A), 2 - Olsen Gang (task1B): ")
+    choice = input("1 - run tests (task1A), 2 - Olsen Gang (task1B),\n" \
+            "3 - for vector implementation: : ")
 
     oSorter = sorter.Sorter()
 
     match choice.strip():
         case '1':
-            sizes = [1, 2, 5, 10, 20, 50, 100, 200, 500, 1000, 2000]
-            sizes_long = [1, 2, 5, 10, 20, 50, 100, 200, 500, 1000, 2000, 5000, 10000, 20000, 50000]
+            sizes = [0, 1, 2, 5, 10, 20, 50, 100, 200, 500, 1000, 2000]
+            sizes_long = [0, 1, 2, 5, 10, 20, 50, 100, 200, 500, 1000, 2000, 5000, 10000, 20000, 50000]
 
-            version = input("1 - for quick (default), 2 - for long (really long, I did maximum for 10000, it will have to sort array of 50000 elements 30 times),\n" \
-            "3 - for vector implementation: ")
+            version = input("1 - for quick (default), 2 - for long (really long, I did maximum for 10000, it will have to sort array of 50000 elements 30 times): ")
             if version.strip() == '2':
                 sizes = sizes_long
 
