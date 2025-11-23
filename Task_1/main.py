@@ -12,7 +12,10 @@ def random_array(n):
 def measure(algo, n, reps=30):
     times = []
     for _ in range(reps):
-        arr = random_array(n)
+        if algo == oSorter.radixSort:
+            arr = [random.randint(0, 5000) for _ in range(n)]
+        else:
+            arr = random_array(n)
         arr_copy = arr[:]
         start = time.perf_counter()
         algo(arr_copy)
@@ -47,21 +50,22 @@ if __name__ == "__main__":
 
     match choice.strip():
         case '1':
-            sizes = [0, 1, 2, 5, 10, 20, 50, 100, 200, 500, 1000, 2000]
-            sizes_long = [0, 1, 2, 5, 10, 20, 50, 100, 200, 500, 1000, 2000, 5000, 10000, 20000, 50000]
+            sizes = [1, 2, 5, 10, 20, 50, 100, 200, 500, 1000, 2000]
+            sizes_long = [1, 2, 5, 10, 20, 50, 100, 200, 500, 1000, 2000, 5000, 10000, 20000, 50000]
 
             version = input("1 - for quick (default), 2 - for long (really long, I did maximum for 10000, it will have to sort array of 50000 elements 30 times),\n" \
             "3 - for vector implementation: ")
             if version.strip() == '2':
                 sizes = sizes_long
 
-            results = { 'bubble': [], 'insertion': [], 'merge': [], 'quick': [] }
+            results = { 'bubble': [], 'insertion': [], 'merge': [], 'quick': [], 'radix(only non-negative)': [] }
 
             for n in sizes:
                 for name, func in [('bubble', oSorter.bubbleSort),
                                 ('insertion', oSorter.insertionSort),
                                 ('merge', oSorter.mergeSort),
-                                ('quick', oSorter.quickSort)]:
+                                ('quick', oSorter.quickSort),
+                                ('radix(only non-negative)', oSorter.radixSort)]:
                     avg = measure(func, n)
                     results[name].append(avg)
                     print(f"{name} n={n}: {avg:.6f} s")
@@ -72,6 +76,7 @@ if __name__ == "__main__":
             plt.plot(sizes, results['insertion'], marker='o', label='Insertion sort')
             plt.plot(sizes, results['merge'], marker='o', label='Merge sort')
             plt.plot(sizes, results['quick'], marker='o', label='Quick sort')
+            plt.plot(sizes, results['radix(only non-negative)'], marker='o', label='Radix sort (only non-negative)')
 
             plt.xlabel('Array size n')
             plt.ylabel('Average running time (seconds)')
@@ -84,7 +89,7 @@ if __name__ == "__main__":
             with open("sorting_results.csv", "w", newline="") as f:
                 writer = csv.writer(f)
                 # header
-                writer.writerow(["n", "bubble", "insertion", "merge", "quick"])
+                writer.writerow(["n", "bubble", "insertion", "merge", "quick", "radix(only non-negative)"])
                 
                 # one row per n
                 for i, n in enumerate(sizes):
