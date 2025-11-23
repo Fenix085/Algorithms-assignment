@@ -7,13 +7,13 @@ import csv
 import matplotlib.pyplot as plt
 
 def random_array(n):
-    return [random.randint(-5000, 5000) for _ in range(n)]
+    return [random.randint() for _ in range(n)]
 
 def measure(algo, n, reps=30):
     times = []
     for _ in range(reps):
         if algo == oSorter.radixSort:
-            arr = [random.randint(0, 5000) for _ in range(n)]
+            arr = [random.randint(0, 5000000) for _ in range(n)]
         else:
             arr = random_array(n)
         arr_copy = arr[:]
