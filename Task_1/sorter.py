@@ -129,10 +129,20 @@ class Sorter:
         #         return False
         # return True
         return False if any(arr[i - 1] > arr[i] for i in range(1, len(arr))) else True
+    # ----------------------------------------------------------------
+    @staticmethod
+    def stalinSort(arr):
+        if len(arr) == 0:
+            return arr
+        purged = [arr[0]]
+        for i in range(1, len(arr)):
+            if arr[i] >= purged[-1]:
+                purged.append(arr[i])
+        return purged
 
 if __name__ == "__main__":
     pass
-    # arr = [64]
+    # arr = [1, 2, 3, 1, 3, 64, 128, 32, 0, 512, 256]
     # oSorter = Sorter()
-    # oSorter.radixSort(arr)
+    # arr = oSorter.stalinSort(arr)
     # print("Sorted array is:", arr)

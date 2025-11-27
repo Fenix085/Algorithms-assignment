@@ -58,14 +58,15 @@ if __name__ == "__main__":
             if version.strip() == '2':
                 sizes = sizes_long
 
-            results = { 'bubble': [], 'insertion': [], 'merge': [], 'quick': [], 'radix(only non-negative)': [] }
+            results = { 'bubble': [], 'insertion': [], 'merge': [], 'quick': [], 'radix(only non-negative)': [], 'stalin': [] }
 
             for n in sizes:
                 for name, func in [('bubble', oSorter.bubbleSort),
                                 ('insertion', oSorter.insertionSort),
                                 ('merge', oSorter.mergeSort),
                                 ('quick', oSorter.quickSort),
-                                ('radix(only non-negative)', oSorter.radixSort)]:
+                                ('radix(only non-negative)', oSorter.radixSort),
+                                ('stalin', oSorter.stalinSort)]:
                     avg = measure(func, n)
                     results[name].append(avg)
                     print(f"{name} n={n}: {avg:.6f} s")
@@ -77,6 +78,7 @@ if __name__ == "__main__":
             plt.plot(sizes, results['merge'], marker='o', label='Merge sort')
             plt.plot(sizes, results['quick'], marker='o', label='Quick sort')
             plt.plot(sizes, results['radix(only non-negative)'], marker='o', label='Radix sort (only non-negative)')
+            plt.plot(sizes, results['stalin'], marker='o', label='Stalin sort')
 
             plt.xlabel('Array size n')
             plt.ylabel('Average running time (seconds)')
@@ -89,7 +91,7 @@ if __name__ == "__main__":
             with open("sorting_results.csv", "w", newline="") as f:
                 writer = csv.writer(f)
                 # header
-                writer.writerow(["n", "bubble", "insertion", "merge", "quick", "radix(only non-negative)"])
+                writer.writerow(["n", "bubble", "insertion", "merge", "quick", "radix(only non-negative)", "stalin"])
                 
                 # one row per n
                 for i, n in enumerate(sizes):
@@ -99,6 +101,8 @@ if __name__ == "__main__":
                         results["insertion"][i],
                         results["merge"][i],
                         results["quick"][i],
+                        results["radix(only non-negative)"][i],
+                        results["stalin"][i],
                     ])
         case '2':
             rows = []
@@ -154,3 +158,16 @@ if __name__ == "__main__":
 
         case '3':
             oVector = vector.Vector()
+
+        
+        case 'fuck around':
+            sizes = [50000, 100000, 200000, 500000, 1000000]
+            
+            results = { 'bubble': [], 'insertion': [], 'merge': [], 'quick': [], 'radix(only non-negative)': [], 'stalin': [] }
+
+            for n in sizes:
+                for name, func in [('stalin', oSorter.stalinSort)]:
+                    avg = measure(func, n)
+                    results[name].append(avg)
+                    print(f"{name} n={n}: {avg:.6f} s")
+                
