@@ -58,7 +58,7 @@ if __name__ == "__main__":
             if version.strip() == '2':
                 sizes = sizes_long
 
-            results = { 'bubble': [], 'insertion': [], 'merge': [], 'quick': [], 'radix(only non-negative)': [], 'stalin': [] }
+            results = { 'bubble': [], 'insertion': [], 'merge': [], 'quick': [], 'radix(only non-negative)': [], 'stalin': [], 'heap': [] }
 
             for n in sizes:
                 for name, func in [('bubble', oSorter.bubbleSort),
@@ -66,7 +66,8 @@ if __name__ == "__main__":
                                 ('merge', oSorter.mergeSort),
                                 ('quick', oSorter.quickSort),
                                 ('radix(only non-negative)', oSorter.radixSort),
-                                ('stalin', oSorter.stalinSort)]:
+                                ('stalin', oSorter.stalinSort),
+                                ('heap', oSorter.heapSort)]:
                     avg = measure(func, n)
                     results[name].append(avg)
                     print(f"{name} n={n}: {avg:.6f} s")
@@ -79,6 +80,7 @@ if __name__ == "__main__":
             plt.plot(sizes, results['quick'], marker='o', label='Quick sort')
             plt.plot(sizes, results['radix(only non-negative)'], marker='o', label='Radix sort (only non-negative)')
             plt.plot(sizes, results['stalin'], marker='o', label='Stalin sort')
+            plt.plot(sizes, results['heap'], marker='o', label='Heap sort')
 
             plt.xlabel('Array size n')
             plt.ylabel('Average running time (seconds)')
@@ -91,7 +93,7 @@ if __name__ == "__main__":
             with open("sorting_results.csv", "w", newline="") as f:
                 writer = csv.writer(f)
                 # header
-                writer.writerow(["n", "bubble", "insertion", "merge", "quick", "radix(only non-negative)", "stalin"])
+                writer.writerow(["n", "bubble", "insertion", "merge", "quick", "radix(only non-negative)", "stalin", "heap"])
                 
                 # one row per n
                 for i, n in enumerate(sizes):
@@ -103,6 +105,7 @@ if __name__ == "__main__":
                         results["quick"][i],
                         results["radix(only non-negative)"][i],
                         results["stalin"][i],
+                        results["heap"][i],
                     ])
         case '2':
             rows = []

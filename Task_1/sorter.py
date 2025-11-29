@@ -109,6 +109,35 @@ class Sorter:
             exp *= 10
 
         return arr
+    
+    # ----------------------------------------------------------------
+    @staticmethod
+    def heapSort(arr):
+        n = len(arr)
+        for i in range(n // 2 - 1, -1, -1):
+            Sorter.heapify(arr, n, i)
+
+        for i in range(n - 1, 0, -1):
+            arr[0], arr[i] = arr[i], arr[0]
+            Sorter.heapify(arr, i, 0)
+
+        return arr
+
+    @staticmethod
+    def heapify(arr, n, i):
+        largest = i
+        l = 2*i + 1
+        r = 2*i + 2
+
+        if l < n and arr[l] > arr[largest]:
+            largest = l
+
+        if r < n and arr[r] > arr[largest]:
+            largest = r
+
+        if largest != i:
+            arr[i], arr[largest] = arr[largest], arr[i]
+            Sorter.heapify(arr, n, largest)   
     # ----------------------------------------------------------------
     @staticmethod
     def miracleSort(arr):
