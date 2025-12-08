@@ -169,6 +169,13 @@ class Sorter:
                 purged.append(arr[i])
         return purged
 
+    # ----------------------------------------------------------------
+    @staticmethod
+    def communizmSort(arr):
+        if len(arr) == 0:
+            return arr
+        return [min(arr)] * len(arr)
+    
 if __name__ == "__main__":
     pass
     # arr = [1, 2, 3, 1, 3, 64, 128, 32, 0, 512, 256]

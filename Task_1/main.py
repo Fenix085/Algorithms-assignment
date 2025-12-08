@@ -54,11 +54,11 @@ if __name__ == "__main__":
             sizes = [0, 1, 2, 5, 10, 20, 50, 100, 200, 500, 1000, 2000]
             sizes_long = [0, 1, 2, 5, 10, 20, 50, 100, 200, 500, 1000, 2000, 5000, 10000, 20000, 50000]
 
-            version = input("1 - for quick (default), 2 - for long (really long, I did maximum for 10000, it will have to sort array of 50000 elements 30 times): ")
+            version = input("1 - for quick (default), 2 - for long (really long, I did maximum for 10000, it will have to sort array of 50000 elements 30 times(fuck you bubble sort)): ")
             if version.strip() == '2':
                 sizes = sizes_long
 
-            results = { 'bubble': [], 'insertion': [], 'merge': [], 'quick': [], 'radix(only non-negative)': [], 'stalin': [], 'heap': [] }
+            results = { 'bubble': [], 'insertion': [], 'merge': [], 'quick': [], 'radix(only non-negative)': [], 'stalin': [], 'communizm': [], 'heap': [] }
 
             for n in sizes:
                 for name, func in [('bubble', oSorter.bubbleSort),
@@ -67,6 +67,7 @@ if __name__ == "__main__":
                                 ('quick', oSorter.quickSort),
                                 ('radix(only non-negative)', oSorter.radixSort),
                                 ('stalin', oSorter.stalinSort),
+                                ('communizm', oSorter.communizmSort),
                                 ('heap', oSorter.heapSort)]:
                     avg = measure(func, n)
                     results[name].append(avg)
@@ -80,6 +81,7 @@ if __name__ == "__main__":
             plt.plot(sizes, results['quick'], marker='o', label='Quick sort')
             plt.plot(sizes, results['radix(only non-negative)'], marker='o', label='Radix sort (only non-negative)')
             plt.plot(sizes, results['stalin'], marker='o', label='Stalin sort')
+            plt.plot(sizes, results['communizm'], marker='o', label='Communizm sort')
             plt.plot(sizes, results['heap'], marker='o', label='Heap sort')
 
             plt.xlabel('Array size n')
@@ -105,6 +107,7 @@ if __name__ == "__main__":
                         results["quick"][i],
                         results["radix(only non-negative)"][i],
                         results["stalin"][i],
+                        results["communizm"][i],
                         results["heap"][i],
                     ])
         case '2':
