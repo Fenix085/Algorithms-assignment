@@ -95,7 +95,7 @@ if __name__ == "__main__":
             with open("sorting_results.csv", "w", newline="") as f:
                 writer = csv.writer(f)
                 # header
-                writer.writerow(["n", "bubble", "insertion", "merge", "quick", "radix(only non-negative)", "stalin", "heap"])
+                writer.writerow(["n", "bubble", "insertion", "merge", "quick", "radix(only non-negative)", "stalin", "heap", "communizm"])
                 
                 # one row per n
                 for i, n in enumerate(sizes):
