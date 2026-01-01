@@ -156,7 +156,7 @@ if __name__ == "__main__":
                 output_rows.append(new_row)
 
             # 4. Write final CSV
-            with open("data/carddump_sorted_full.csv", "w", newline="") as f_out:
+            with open("assignment_1/results/carddump_sorted_full.csv", "w", newline="") as f_out:
                 fieldnames = output_rows[0].keys()
                 writer = csv.DictWriter(f_out, fieldnames=fieldnames)
                 writer.writeheader()
