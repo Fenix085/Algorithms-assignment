@@ -9,6 +9,7 @@ def oVec():
 def test_push_back(oVec):
     oVec.push_back(10)
     assert oVec.size() == 1
+    assert oVec[0] == 10
 
 def test_push_back_stores_values(oVec):
     oVec.push_back(10)
@@ -21,6 +22,7 @@ def test_push_back_stores_values(oVec):
 def test_resize(oVec):
     oVec.resize(5, 0)
     assert oVec.size() == 5
+    assert oVec.to_list() == [0, 0, 0, 0, 0]
 
 def test_resize_grow_fills(oVec):
     oVec.push_back(7)
