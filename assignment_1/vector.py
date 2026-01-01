@@ -69,19 +69,31 @@ class Vector:
         self._n = new_size
 
     def erase(self, pos: int) -> None:
-        pass
+        if not (0 <= pos < self._n):
+            raise IndexError("Index out of range")
+        for i in range(pos, self._n - 1):
+            self._data[i] = self._data[i + 1]
+        self._n -= 1
+
+    def erase_range(self, start: int, end: int) -> None:
+        """[start, end)"""
+        if not (0 <= start <= end <= self._n):
+            raise IndexError("Index out of range")
+        count = end - start
+        for i in range(start, self._n - count):
+            self._data[i] = self._data[i + count]
+        self._n -= count
+
+    def to_list(self) -> list:
+        return [int(self._data[i]) for i in range(self._n)]
     
 if __name__ == "__main__":
-    oVector = Vector()
-    for i in range(10):
-        oVector.push_back(2**i)
-    print("Vector contents:", [oVector.at(i) for i in range(oVector.size())])
-    print("Vector size:", oVector.size())
-    print("Vector capacity:", oVector.capacity())
-    print("Front element:", oVector.front())
-    print("Back element:", oVector.back())
-    oVector.pop_back()
-    print("After pop_back, Vector contents:", [oVector.at(i) for i in range(oVector.size())])
-    oVector.clear()
-    print("After clear, Vector size:", oVector.size())
-    print("After clear, Vector is empty:", oVector.is_empty())
+    oVec = Vector()
+    prev = oVec.buffer_address()
+
+    for i in range(1000000):
+        oVec.push_back(i)
+        addr = oVec.buffer_address()
+        if addr != prev:
+            print("reallocated at size =", oVec.size(), "new cap =", oVec.capacity())
+            prev = addr

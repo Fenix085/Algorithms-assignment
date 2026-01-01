@@ -163,7 +163,34 @@ if __name__ == "__main__":
                 writer.writerows(output_rows)
 
         case '3':
-            oVector = vector.Vector()
+            oVec = vector.Vector()
+            done = False
+            while not done:
+                choice = input("1 - push_back, 2 - resize, 3 - erase, 4 - erase_range, 5- to_list, any other key - exit: ")
+                match choice.strip():
+                    case '1':
+                        val = int(input("Value to push_back: "))
+                        oVec.push_back(val)
+                        print("Done.")
+                    case '2':
+                        new_size = int(input("New size: "))
+                        fill = int(input("Fill value (default 0): ") or "0")
+                        oVec.resize(new_size, fill)
+                        print("Done.")
+                    case '3':
+                        pos = int(input("Position to erase: "))
+                        oVec.erase(pos)
+                        print("Done.")
+                    case '4':
+                        start = int(input("Start position to erase_range: "))
+                        end = int(input("End position to erase_range: "))
+                        oVec.erase_range(start, end)
+                        print("Done.")
+                    case '5':
+                        lst = oVec.to_list()
+                        print("Vector contents:", lst)
+                    case _:
+                        done = True
 
         
         case 'fuck around':
