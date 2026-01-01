@@ -54,7 +54,7 @@ if __name__ == "__main__":
             sizes = [0, 1, 2, 5, 10, 20, 50, 100, 200, 500, 1000, 2000]
             sizes_long = [0, 1, 2, 5, 10, 20, 50, 100, 200, 500, 1000, 2000, 5000, 10000, 20000, 50000]
 
-            version = input("1 - for quick (default), 2 - for long (really long, I did maximum for 10000, it will have to sort array of 50000 elements 30 times(fuck you bubble sort)): ")
+            version = input("1 - for quick (default), 2 - for long (really long, I did maximum for 10000, it will have to sort array of 50000 elements 30 (or whatever) times (I am looking at you, bubble sort)): ")
             if version.strip() == '2':
                 sizes = sizes_long
 
@@ -92,7 +92,7 @@ if __name__ == "__main__":
 
             plt.show()
 
-            with open("Task_1/results/sorting_results.csv", "w", newline="") as f:
+            with open("assignment_1/results/sorting_results.csv", "w", newline="") as f:
                 writer = csv.writer(f)
                 # header
                 writer.writerow(["n", "bubble", "insertion", "merge", "quick", "radix(only non-negative)", "stalin", "heap", "communizm"])
@@ -112,7 +112,7 @@ if __name__ == "__main__":
                     ])
         case '2':
             rows = []
-            with open("Task_1/data/carddump2.csv", "r") as f:
+            with open("assignment_1/data/carddump2.csv", "r") as f:
                 reader = csv.DictReader(f)
                 for row in reader:
                     rows.append(row)
@@ -121,19 +121,19 @@ if __name__ == "__main__":
             sorted_keys = oSorter.radixSort(list(key_row_dict.keys()))
             rows = [key_row_dict[k] for k in sorted_keys]
 
-            with open("Task_1/results/carddump2_sorted.csv", "w", newline="") as f:
+            with open("assignment_1/results/carddump2_sorted.csv", "w", newline="") as f:
                 filednames = rows[0].keys()
                 writer = csv.DictWriter(f, fieldnames=filednames)
                 writer.writeheader()
                 writer.writerows(rows)
 
             # 1. Read dump1 (masked last 4)
-            with open("Task_1/data/carddump1.csv", "r", newline="") as f1:
+            with open("assignment_1/data/carddump1.csv", "r", newline="") as f1:
                 reader1 = csv.DictReader(f1)
                 rows1 = list(reader1)
 
             # 2. Read sorted dump2 (masked first 12, real last 4)
-            with open("Task_1/results/carddump2_sorted.csv", "r", newline="") as f2:
+            with open("assignment_1/results/carddump2_sorted.csv", "r", newline="") as f2:
                 reader2 = csv.DictReader(f2)
                 rows2 = list(reader2)
 
