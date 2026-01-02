@@ -1,10 +1,11 @@
-import sorter
-import vector
+from sorter import *
+from vector import Vector
 import time
 import random
 from statistics import mean
 import csv
 import matplotlib.pyplot as plt
+import gc
 
 def random_array(n):
     return [random.randint(-5000, 5000) for _ in range(n)]
@@ -44,10 +45,10 @@ def half_mixer(card_f: str, card_s: str) -> str:
 
 if __name__ == "__main__":
 
-    choice = input("1 - run tests (task1A), 2 - Olsen Gang (task1B),\n" \
-            "3 - for vector implementation: : ")
+    choice = input("1 - run tests (task1A)\n2 - Olsen Gang (task1B)\n" \
+            "3 - for vector implementation\n4 - for racing of data storages: ")
 
-    oSorter = sorter.Sorter()
+    oSorter = Sorter()
 
     match choice.strip():
         case '1':
@@ -163,7 +164,7 @@ if __name__ == "__main__":
                 writer.writerows(output_rows)
 
         case '3':
-            oVec = vector.Vector()
+            oVec = Vector()
             done = False
             while not done:
                 choice = input("1 - push_back, 2 - resize, 3 - erase, 4 - erase_range, 5- to_list, any other key - exit: ")
@@ -191,7 +192,8 @@ if __name__ == "__main__":
                         print("Vector contents:", lst)
                     case _:
                         done = True
-
+        case "4":
+            pass
         
         case 'fuck around':
             sizes = [50000, 100000, 200000, 500000, 1000000]
