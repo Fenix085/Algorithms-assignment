@@ -1,5 +1,6 @@
 from sorter import *
 from vector import Vector
+from linked_list import LinkedList
 import time
 import random
 from statistics import mean
@@ -42,6 +43,61 @@ def half_mixer(card_f: str, card_s: str) -> str:
 
     # first 3 groups from first file, last group from second file
     return "-".join(parts_f[:3] + parts_s[3:])
+
+def bench_appends(name, make_container, push_fn, N=2000000, sample_every=50000):
+    gc_was_enabled = gc.isenabled()
+    gc.disable()
+
+    c = make_container()
+
+    has_cap = hasattr(c, "capacity")
+    has_addr = hasattr(c, "buffer_address")
+
+    last_cap = c.capacity() if has_cap else None
+    last_addr = c.buffer_address() if has_addr else None
+
+    is_py_list = isinstance(c, list)
+    last_size = c.__sizeof__() if is_py_list else None
+
+    realloc_events = []
+    samples = []
+
+    t0 = time.perf_counter()
+    for i in range(1, N + 1):
+        push_fn(c, i)
+
+        if has_cap:
+            cap = c.capacity()
+            if cap != last_cap:
+                realloc_events.append((i, f"cap {last_cap}->{cap}"))
+                last_cap = cap
+
+        if has_addr:
+            addr = c.buffer_address()
+            if addr != last_addr:
+                realloc_events.append((i, "addr changed"))
+                last_addr = addr
+
+        if is_py_list:
+            size = c.__sizeof__()
+            if size != last_size:
+                realloc_events.append((i, f"__sizeof__ {last_size}->{size}"))
+                last_size = size
+
+        if i % sample_every == 0:
+            samples.append((i, time.perf_counter() - t0))
+
+    total = time.perf_counter() - t0
+    if gc_was_enabled:
+        gc.enable()
+
+    print(f"\n{name}")
+    print(f"N={N:,} total={total:.3f}s")
+    print(f"realloc-events-detected={len(realloc_events)}")
+    if realloc_events:
+        print("first reallocs:", realloc_events[:10])
+
+    return total, samples, realloc_events
 
 if __name__ == "__main__":
 
@@ -193,7 +249,9 @@ if __name__ == "__main__":
                     case _:
                         done = True
         case "4":
-            pass
+            bench_appends("Vector", make_container=lambda: Vector(), push_fn = lambda v, x: v.push_back(x))
+            bench_appends("Python list", make_container=lambda: [], push_fn = lambda lst, x: lst.append(x))
+            bench_appends("LinkedList", make_container=lambda: LinkedList(), push_fn = lambda ll, x: ll.push_back(x))
         
         case 'fuck around':
             sizes = [50000, 100000, 200000, 500000, 1000000]
