@@ -1,6 +1,7 @@
 # Algorithms assignment
 
-For task 1 A and B of the first assignment run Task\_1/main.py while execution folder is the same as this README
+- For the first assignment run assignment\_1/main.py while execution folder is the same as this README
+- For The second assignment run assignment\_2/main.py while execution folder is the same as this README
 
-Results of those tasks are sorting\_results.csv, carddump\_sorted\_full.csv
+Results of the first assignment are saved in assignment\_1/results/ as sorting_results.csv, carddump2_sorted.csv and carddump_sorted_full.csv
 
