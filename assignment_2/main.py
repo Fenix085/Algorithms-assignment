@@ -2,6 +2,7 @@ from bin_tree import BinaryTree
 import random
 import time
 import statistics as stats
+from sortedcontainers import SortedSet
 
 def best_case_order(sorted_keys):
     q = [(0, len(sorted_keys) - 1)]
@@ -33,10 +34,10 @@ if __name__ == "__main__":
     n = 2**m - 1
     tree = BinaryTree()
     
-      
-
     final_rand = []
     final_best = []
+    final_set = []
+    final_set_best = []
 
     for _ in range(30):
         rand_keys = random.sample(range(10 * n), n)
@@ -44,6 +45,11 @@ if __name__ == "__main__":
 
         final_rand.append(insert_benchmark(BinaryTree, rand_keys)[-1])
         final_best.append(insert_benchmark(BinaryTree, balanced_order)[-1])
+        final_set.append(insert_benchmark(SortedSet, rand_keys)[-1])
+        final_set_best.append(insert_benchmark(SortedSet, balanced_order)[-1])
+
 
     print("Final time random-order BST:", stats.median(final_rand))
     print("Final time best-case BST:", stats.median(final_best))
+    print("Final time SortedSet:", stats.median(final_set))
+    print("Final time best-case SortedSet:", stats.median(final_set_best))
