@@ -68,7 +68,6 @@ class Sorter:
         if l < r:
             pivot_index = random.randint(l, r)
             arr[pivot_index], arr[r] = arr[r], arr[pivot_index]
-            pivot = arr[r]
             pivot = Sorter.partition(arr, l, r)
             Sorter.quickSort(arr, l, pivot - 1)
             Sorter.quickSort(arr, pivot + 1, r)
@@ -86,6 +85,10 @@ class Sorter:
         arr[i + 1], arr[r] = arr[r], arr[i + 1]
         return i + 1
     
+    #----Multi-Pivot Quick Sort-------------------------------------------------
+
+    @staticmethod
+
     # ---Radix Sort-------------------------------------------------------------
 
     @staticmethod

@@ -102,7 +102,8 @@ def bench_appends(name, make_container, push_fn, N=2000000, sample_every=50000):
 if __name__ == "__main__":
 
     choice = input("1 - run tests (task1A)\n2 - Olsen Gang (task1B)\n" \
-            "3 - for vector implementation\n4 - for racing of data storages: ")
+            "3 - for vector implementation\n4 - for racing of data storages\n" \
+            "5 - 'Dangerous Quickminds': ")
 
     oSorter = Sorter()
 
@@ -252,6 +253,9 @@ if __name__ == "__main__":
             bench_appends("Vector", make_container=lambda: Vector(), push_fn = lambda v, x: v.push_back(x))
             bench_appends("Python list", make_container=lambda: [], push_fn = lambda lst, x: lst.append(x))
             bench_appends("LinkedList", make_container=lambda: LinkedList(), push_fn = lambda ll, x: ll.push_back(x))
+
+        case "5":
+            pass
         
         case 'fuck around':
             sizes = [50000, 100000, 200000, 500000, 1000000]
