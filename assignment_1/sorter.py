@@ -88,6 +88,61 @@ class Sorter:
     #----Multi-Pivot Quick Sort-------------------------------------------------
 
     @staticmethod
+    def dualPivotQuickSort(arr, l = 0, r = None):
+        if r is None:
+            r = len(arr) - 1
+    
+        if l < r:
+            
+            # lp means left pivot and rp 
+            # means right pivot
+            lp, rp = Sorter.partition_dual(arr, l, r)
+            
+            Sorter.dualPivotQuickSort(arr, l, lp - 1)
+            Sorter.dualPivotQuickSort(arr, lp + 1, rp - 1)
+            Sorter.dualPivotQuickSort(arr, rp + 1, r)
+    
+    @staticmethod    
+    def partition_dual(arr, l, r):
+        
+        if arr[l] > arr[r]:
+            arr[l], arr[r] = arr[r], arr[l]
+            
+        # p is the left pivot, and q is the right pivot.
+        j = k = l + 1
+        g, p, q = r - 1, arr[l], arr[r]
+        
+        while k <= g:
+            
+            # If elements are less than the left pivot
+            if arr[k] < p:
+                arr[k], arr[j] = arr[j], arr[k]
+                j += 1
+                
+            # If elements are greater than or equal 
+            # to the right pivot
+            elif arr[k] >= q:
+                while arr[g] > q and k < g:
+                    g -= 1
+                    
+                arr[k], arr[g] = arr[g], arr[k]
+                g -= 1
+                
+                if arr[k] < p:
+                    arr[k], arr[j] = arr[j], arr[k]
+                    j += 1
+                    
+            k += 1
+            
+        j -= 1
+        g += 1
+        
+        # Bring pivots to their appropriate positions.
+        arr[l], arr[j] = arr[j], arr[l]
+        arr[r], arr[g] = arr[g], arr[r]
+        
+        # Returning the indices of the pivots
+        return j, g
 
     # ---Radix Sort-------------------------------------------------------------
 
@@ -192,8 +247,8 @@ class Sorter:
         return [min(arr)] * len(arr)
     
 if __name__ == "__main__":
-    pass
-    # arr = [1, 2, 3, 1, 3, 64, 128, 32, 0, 512, 256]
-    # oSorter = Sorter()
-    # arr = oSorter.stalinSort(arr)
-    # print("Sorted array is:", arr)
+    # pass
+    arr = [1, 2, 3, 1, 3, 64, 128, 32, 0, 512, 256]
+    oSorter = Sorter()
+    Sorter.dualPivotQuickSort(arr)
+    print(arr)
