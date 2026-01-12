@@ -9,7 +9,7 @@ import matplotlib.pyplot as plt
 import gc
 
 def random_array(n):
-    return [random.randint(-5000, 5000) for _ in range(n)]
+    return [random.randint(-50000, 50000) for _ in range(n)]
 
 def measure(algo, n, reps=30):
     times = []
@@ -257,11 +257,12 @@ if __name__ == "__main__":
         case "5":
             sizes = [10000, 20000, 30000, 40000, 50000, 60000, 70000, 80000, 90000, 100000]
 
-            results = { '1-pivot': [], '2-pivot': [] }
+            results = { '1-pivot': [], '2-pivot': [], '3-pivot': [] }
 
             for n in sizes:
                 for name, func in [('1-pivot', oSorter.quickSort),
-                                ('2-pivot', oSorter.dualPivotQuickSort)]:
+                                ('2-pivot', oSorter.dualPivotQuickSort),
+                                ('3-pivot', oSorter.triplePivotQuickSort)]:
                     avg = measure(func, n)
                     results[name].append(avg)
                     print(f"{name} n={n}: {avg:.6f} s")
@@ -270,6 +271,7 @@ if __name__ == "__main__":
 
             plt.plot(sizes, results['1-pivot'], marker='o', label='1-pivot Quick sort')
             plt.plot(sizes, results['2-pivot'], marker='o', label='2-pivot Quick sort')
+            plt.plot(sizes, results['3-pivot'], marker='o', label='3-pivot Quick sort')
 
             plt.xlabel('Array size n')
             plt.ylabel('Average running time (seconds)')
@@ -282,7 +284,7 @@ if __name__ == "__main__":
             with open("assignment_1/results/sorting_results_pivots.csv", "w", newline="") as f:
                 writer = csv.writer(f)
                 # header
-                writer.writerow(["n", "1-pivot", "2-pivot"])
+                writer.writerow(["n", "1-pivot", "2-pivot", "3-pivot"])
                 
                 # one row per n
                 for i, n in enumerate(sizes):
@@ -290,6 +292,7 @@ if __name__ == "__main__":
                         n,
                         results["1-pivot"][i],
                         results["2-pivot"][i],
+                        results["3-pivot"][i],
                     ])
         
         case 'fuck around':

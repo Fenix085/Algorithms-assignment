@@ -101,6 +101,7 @@ class Sorter:
             Sorter.dualPivotQuickSort(arr, l, lp - 1)
             Sorter.dualPivotQuickSort(arr, lp + 1, rp - 1)
             Sorter.dualPivotQuickSort(arr, rp + 1, r)
+        return arr
     
     @staticmethod    
     def partition_dual(arr, l, r):
@@ -143,6 +144,40 @@ class Sorter:
         
         # Returning the indices of the pivots
         return j, g
+    
+    @staticmethod
+    def triplePivotQuickSort(arr):
+        n = len(arr)
+        if n <= 1:
+            return arr.copy()
+
+        if n <= 16:
+            Sorter.insertionSort(arr)
+            return arr
+
+        # pick 3 pivots (random positions)
+        i1, i2, i3 = random.sample(range(n), 3)
+        p, q, s = sorted((arr[i1], arr[i2], arr[i3]))
+
+        # 4 buckets
+        A, B, C, D = [], [], [], []
+        for x in arr:
+            if x < p:
+                A.append(x)
+            elif x < q:
+                B.append(x)
+            elif x < s:
+                C.append(x)
+            else:
+                D.append(x)
+
+        # recurse
+        return (
+            Sorter.triplePivotQuickSort(A) +
+            Sorter.triplePivotQuickSort(B) +
+            Sorter.triplePivotQuickSort(C) +
+            Sorter.triplePivotQuickSort(D)
+        )
 
     # ---Radix Sort-------------------------------------------------------------
 
@@ -248,7 +283,7 @@ class Sorter:
     
 if __name__ == "__main__":
     # pass
-    arr = [1, 2, 3, 1, 3, 64, 128, 32, 0, 512, 256]
+    arr_s = [1, 5, 3, 8, 2, 7, 4, 6]
+    arr = [1, 2, 3, 1, 3, 64, 128, 32, 0, 512, 256, 1, 1024, 5, 2, 3, 5, 7, 9, 11, 13, 15, 17, 19, 21, 23, 25, 2048]
     oSorter = Sorter()
-    Sorter.dualPivotQuickSort(arr)
-    print(arr)
+    print(Sorter.triplePivotQuickSort(arr)) 
