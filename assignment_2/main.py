@@ -21,11 +21,22 @@ def best_case_order(sorted_keys):
     return out
 
 def insert_benchmark(tree, keys):
-    t0 = time.perf_counter()
     times = []
+    tree = tree()
+    t0 = time.perf_counter()
+    for k in keys:
+        tree.add(k)
+        times.append(time.perf_counter() - t0)
+    return times
+
+def remove_benchmark(tree, keys):
     tree = tree()
     for k in keys:
         tree.add(k)
+    times = []
+    t0 = time.perf_counter()
+    for k in keys:
+        tree.remove(k)
         times.append(time.perf_counter() - t0)
     return times
 
@@ -34,22 +45,27 @@ if __name__ == "__main__":
     n = 2**m - 1
     tree = BinaryTree()
     
-    final_rand = []
-    final_best = []
-    final_set = []
-    final_set_best = []
+    ins_final_rand = []
+    ins_final_best = []
+    ins_final_set = []
+    ins_final_set_best = []
+    rm_final_rand = []
+    rm_final_set = []
 
     for _ in range(30):
         rand_keys = random.sample(range(10 * n), n)
         balanced_order = best_case_order(sorted(rand_keys))
 
-        final_rand.append(insert_benchmark(BinaryTree, rand_keys)[-1])
-        final_best.append(insert_benchmark(BinaryTree, balanced_order)[-1])
-        final_set.append(insert_benchmark(SortedSet, rand_keys)[-1])
-        final_set_best.append(insert_benchmark(SortedSet, balanced_order)[-1])
+        ins_final_rand.append(insert_benchmark(BinaryTree, rand_keys)[-1])
+        ins_final_best.append(insert_benchmark(BinaryTree, balanced_order)[-1])
+        ins_final_set.append(insert_benchmark(SortedSet, rand_keys)[-1])
+        ins_final_set_best.append(insert_benchmark(SortedSet, balanced_order)[-1])
+        rm_final_rand.append(remove_benchmark(BinaryTree, rand_keys)[-1])
+        rm_final_set.append(remove_benchmark(SortedSet, rand_keys)[-1])
 
-
-    print("Final time random-order BST:", stats.median(final_rand))
-    print("Final time best-case BST:", stats.median(final_best))
-    print("Final time SortedSet:", stats.median(final_set))
-    print("Final time best-case SortedSet:", stats.median(final_set_best))
+    print("Final insertion time random-order BST:", stats.median(ins_final_rand))
+    print("Final insertion time best-case BST:", stats.median(ins_final_best))
+    print("Final insertion time random-order SortedSet:", stats.median(ins_final_set))
+    print("Final insertion time best-case SortedSet:", stats.median(ins_final_set_best))
+    print("Final removal time random-order BST:", stats.median(rm_final_rand))
+    print("Final removal time random-order SortedSet:", stats.median(rm_final_set))
