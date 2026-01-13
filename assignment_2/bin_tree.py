@@ -1,5 +1,3 @@
-from collections import deque
-
 class BinaryTree:
     class Node:
         __slots__ = ('data', 'left', 'right')
