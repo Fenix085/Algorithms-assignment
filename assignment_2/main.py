@@ -54,24 +54,27 @@ def best_case_order(tree, sorted_keys):
     return out
 
 def insert_benchmark(tree, keys):
-    times = []
     tree = tree()
     t0 = time.perf_counter()
     for k in keys:
         tree.add(k)
-        times.append(time.perf_counter() - t0)
-    return times
+    total = time.perf_counter() - t0
+
+    h = tree.height() if hasattr(tree, "height") else None
+    return total, h
+
+
 
 def remove_benchmark(tree, keys):
     tree = tree()
+    t0 = time.perf_counter()
     for k in keys:
         tree.add(k)
-    times = []
     t0 = time.perf_counter()
     for k in keys:
         tree.remove(k)
-        times.append(time.perf_counter() - t0)
-    return times
+    total = time.perf_counter() - t0
+    return total
 
 if __name__ == "__main__":
     m = 17
@@ -79,39 +82,78 @@ if __name__ == "__main__":
     tree = BinaryTree()
     
     ins_final_rand = []
+    bin_height_rand = []
     ins_final_best = []
+    bin_height_best = []
     ins_final_set = []
     ins_final_set_best = []
     rm_final_rand = []
     rm_final_set = []
     ins_final_rand_tern = []
+    tern_height_rand = []
     ins_final_best_tern = []
+    tern_height_best = []
     ins_final_rand_avl = []
+    avl_height_rand = []
     ins_final_best_avl = []
+    avl_height_best = []
 
     for _ in range(30):
         rand_keys = random.sample(range(10 * n), n)
+        
         balanced_order_bin = best_case_order(BinaryTree, sorted(rand_keys))
         balanced_order_tern = best_case_order(TernaryTree, sorted(rand_keys))   
 
-        ins_final_rand.append(insert_benchmark(BinaryTree, rand_keys)[-1])
-        ins_final_best.append(insert_benchmark(BinaryTree, balanced_order_bin)[-1])
-        ins_final_set.append(insert_benchmark(SortedSet, rand_keys)[-1])
-        ins_final_set_best.append(insert_benchmark(SortedSet, balanced_order_bin)[-1])
-        rm_final_rand.append(remove_benchmark(BinaryTree, rand_keys)[-1])
-        rm_final_set.append(remove_benchmark(SortedSet, rand_keys)[-1])
-        ins_final_rand_tern.append(insert_benchmark(TernaryTree, rand_keys)[-1])
-        ins_final_best_tern.append(insert_benchmark(TernaryTree, balanced_order_tern)[-1])
-        ins_final_rand_avl.append(insert_benchmark(AVLTree, rand_keys)[-1])
-        ins_final_best_avl.append(insert_benchmark(AVLTree, balanced_order_bin)[-1])
+        t, h = insert_benchmark(BinaryTree, rand_keys)
+        ins_final_rand.append(t)
+        bin_height_rand.append(h)
+
+        t, h = insert_benchmark(BinaryTree, balanced_order_bin)
+        ins_final_best.append(t)
+        bin_height_best.append(h)
+
+        t, _ = insert_benchmark(SortedSet, rand_keys)
+        ins_final_set.append(t)
+
+        t, _ = insert_benchmark(SortedSet, balanced_order_bin)
+        ins_final_set_best.append(t)
+
+        t = remove_benchmark(BinaryTree, rand_keys)
+        rm_final_rand.append(t)
+
+        t = remove_benchmark(SortedSet, rand_keys)
+        rm_final_set.append(t)
+
+        t, h = insert_benchmark(TernaryTree, rand_keys)
+        ins_final_rand_tern.append(t)
+        tern_height_rand.append(h)
+
+        t, h = insert_benchmark(TernaryTree, balanced_order_tern)
+        ins_final_best_tern.append(t)
+        tern_height_best.append(h)
+
+        t, h = insert_benchmark(AVLTree, rand_keys)
+        ins_final_rand_avl.append(t)
+        avl_height_rand.append(h)
+
+        t, h = insert_benchmark(AVLTree, balanced_order_bin)
+        ins_final_best_avl.append(t)
+        avl_height_best.append(h)
+
 
     print("Final insertion time random-order BST:", stats.median(ins_final_rand))
+    print("Final BST height random-order:", stats.mean(bin_height_rand))
     print("Final insertion time best-case BST:", stats.median(ins_final_best))
+    print("Final BST height best-case:", stats.mean(bin_height_best))
     print("Final insertion time random-order SortedSet:", stats.median(ins_final_set))
     print("Final insertion time best-case SortedSet:", stats.median(ins_final_set_best))
     print("Final removal time random-order BST:", stats.median(rm_final_rand))
     print("Final removal time random-order SortedSet:", stats.median(rm_final_set))
     print("Final insertion time random-order Ternary Tree:", stats.median(ins_final_rand_tern))
+    print("Final Ternary Tree height random-order:", stats.mean(tern_height_rand))
     print("Final insertion time best-case Ternary Tree:", stats.median(ins_final_best_tern))
+    print("Final Ternary Tree height best-case:", stats.mean(tern_height_best))
     print("Final insertion time random-order AVL Tree:", stats.median(ins_final_rand_avl))
+    print("Final AVL Tree height random-order:", stats.mean(avl_height_rand))
     print("Final insertion time best-case AVL Tree:", stats.median(ins_final_best_avl))
+    print("Final AVL Tree height best-case:", stats.mean(avl_height_best))
