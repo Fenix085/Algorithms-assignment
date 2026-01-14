@@ -292,7 +292,7 @@ if __name__ == "__main__":
         },
         title=f"Removal times over {trials} trials (n={n})",
         ylabel="seconds",
-        path=os.path.join(out_dir, "remove_times_boxplot.png"),
+        path=os.path.join(out_dir, "assignment_2/results/remove_times_boxplot.png"),
     )
 
     # Minimal console output so you know where things landed
