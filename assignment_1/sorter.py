@@ -68,7 +68,6 @@ class Sorter:
         if l < r:
             pivot_index = random.randint(l, r)
             arr[pivot_index], arr[r] = arr[r], arr[pivot_index]
-            pivot = arr[r]
             pivot = Sorter.partition(arr, l, r)
             Sorter.quickSort(arr, l, pivot - 1)
             Sorter.quickSort(arr, pivot + 1, r)
@@ -86,6 +85,100 @@ class Sorter:
         arr[i + 1], arr[r] = arr[r], arr[i + 1]
         return i + 1
     
+    #----Multi-Pivot Quick Sort-------------------------------------------------
+
+    @staticmethod
+    def dualPivotQuickSort(arr, l = 0, r = None):
+        if r is None:
+            r = len(arr) - 1
+    
+        if l < r:
+            
+            # lp means left pivot and rp 
+            # means right pivot
+            lp, rp = Sorter.partition_dual(arr, l, r)
+            
+            Sorter.dualPivotQuickSort(arr, l, lp - 1)
+            Sorter.dualPivotQuickSort(arr, lp + 1, rp - 1)
+            Sorter.dualPivotQuickSort(arr, rp + 1, r)
+        return arr
+    
+    @staticmethod    
+    def partition_dual(arr, l, r):
+        
+        if arr[l] > arr[r]:
+            arr[l], arr[r] = arr[r], arr[l]
+            
+        # p is the left pivot, and q is the right pivot.
+        j = k = l + 1
+        g, p, q = r - 1, arr[l], arr[r]
+        
+        while k <= g:
+            
+            # If elements are less than the left pivot
+            if arr[k] < p:
+                arr[k], arr[j] = arr[j], arr[k]
+                j += 1
+                
+            # If elements are greater than or equal 
+            # to the right pivot
+            elif arr[k] >= q:
+                while arr[g] > q and k < g:
+                    g -= 1
+                    
+                arr[k], arr[g] = arr[g], arr[k]
+                g -= 1
+                
+                if arr[k] < p:
+                    arr[k], arr[j] = arr[j], arr[k]
+                    j += 1
+                    
+            k += 1
+            
+        j -= 1
+        g += 1
+        
+        # Bring pivots to their appropriate positions.
+        arr[l], arr[j] = arr[j], arr[l]
+        arr[r], arr[g] = arr[g], arr[r]
+        
+        # Returning the indices of the pivots
+        return j, g
+    
+    @staticmethod
+    def triplePivotQuickSort(arr):
+        n = len(arr)
+        if n <= 1:
+            return arr.copy()
+
+        if n <= 16:
+            Sorter.insertionSort(arr)
+            return arr
+
+        # pick 3 pivots (random positions)
+        i1, i2, i3 = random.sample(range(n), 3)
+        p, q, s = sorted((arr[i1], arr[i2], arr[i3]))
+
+        # 4 buckets
+        A, B, C, D = [], [], [], []
+        for x in arr:
+            if x < p:
+                A.append(x)
+            elif x < q:
+                B.append(x)
+            elif x < s:
+                C.append(x)
+            else:
+                D.append(x)
+
+        # recurse
+        return (
+            Sorter.triplePivotQuickSort(A) +
+            Sorter.triplePivotQuickSort(B) +
+            Sorter.triplePivotQuickSort(C) +
+            Sorter.triplePivotQuickSort(D)
+        )
+
     # ---Radix Sort-------------------------------------------------------------
 
     @staticmethod
@@ -189,8 +282,8 @@ class Sorter:
         return [min(arr)] * len(arr)
     
 if __name__ == "__main__":
-    pass
-    # arr = [1, 2, 3, 1, 3, 64, 128, 32, 0, 512, 256]
-    # oSorter = Sorter()
-    # arr = oSorter.stalinSort(arr)
-    # print("Sorted array is:", arr)
+    # pass
+    arr_s = [1, 5, 3, 8, 2, 7, 4, 6]
+    arr = [1, 2, 3, 1, 3, 64, 128, 32, 0, 512, 256, 1, 1024, 5, 2, 3, 5, 7, 9, 11, 13, 15, 17, 19, 21, 23, 25, 2048]
+    oSorter = Sorter()
+    print(Sorter.triplePivotQuickSort(arr)) 

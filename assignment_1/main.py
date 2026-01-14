@@ -3,13 +3,13 @@ from vector import Vector
 from linked_list import LinkedList
 import time
 import random
-from statistics import mean
+from statistics import median
 import csv
 import matplotlib.pyplot as plt
 import gc
 
 def random_array(n):
-    return [random.randint(-5000, 5000) for _ in range(n)]
+    return [random.randint(-50000, 50000) for _ in range(n)]
 
 def measure(algo, n, reps=30):
     times = []
@@ -23,7 +23,7 @@ def measure(algo, n, reps=30):
         algo(arr_copy)
         end = time.perf_counter()
         times.append(end - start)
-    return mean(times)
+    return median(times)
 
 def create_key(row):
     mm, yyyy = row["Expiry Date"].split('/')
@@ -102,7 +102,8 @@ def bench_appends(name, make_container, push_fn, N=2000000, sample_every=50000):
 if __name__ == "__main__":
 
     choice = input("1 - run tests (task1A)\n2 - Olsen Gang (task1B)\n" \
-            "3 - for vector implementation\n4 - for racing of data storages: ")
+            "3 - for vector implementation\n4 - for racing of data storages\n" \
+            "5 - 'Dangerous Quickminds': ")
 
     oSorter = Sorter()
 
@@ -252,6 +253,47 @@ if __name__ == "__main__":
             bench_appends("Vector", make_container=lambda: Vector(), push_fn = lambda v, x: v.push_back(x))
             bench_appends("Python list", make_container=lambda: [], push_fn = lambda lst, x: lst.append(x))
             bench_appends("LinkedList", make_container=lambda: LinkedList(), push_fn = lambda ll, x: ll.push_back(x))
+
+        case "5":
+            sizes = [10000, 20000, 30000, 40000, 50000, 60000, 70000, 80000, 90000, 100000]
+
+            results = { '1-pivot': [], '2-pivot': [], '3-pivot': [] }
+
+            for n in sizes:
+                for name, func in [('1-pivot', oSorter.quickSort),
+                                ('2-pivot', oSorter.dualPivotQuickSort),
+                                ('3-pivot', oSorter.triplePivotQuickSort)]:
+                    avg = measure(func, n)
+                    results[name].append(avg)
+                    print(f"{name} n={n}: {avg:.6f} s")
+           
+            plt.figure()
+
+            plt.plot(sizes, results['1-pivot'], marker='o', label='1-pivot Quick sort')
+            plt.plot(sizes, results['2-pivot'], marker='o', label='2-pivot Quick sort')
+            plt.plot(sizes, results['3-pivot'], marker='o', label='3-pivot Quick sort')
+
+            plt.xlabel('Array size n')
+            plt.ylabel('Average running time (seconds)')
+            plt.title('Running time of sorting algorithms')
+            plt.legend()
+            plt.grid(True)
+
+            plt.show()
+
+            with open("assignment_1/results/sorting_results_pivots.csv", "w", newline="") as f:
+                writer = csv.writer(f)
+                # header
+                writer.writerow(["n", "1-pivot", "2-pivot", "3-pivot"])
+                
+                # one row per n
+                for i, n in enumerate(sizes):
+                    writer.writerow([
+                        n,
+                        results["1-pivot"][i],
+                        results["2-pivot"][i],
+                        results["3-pivot"][i],
+                    ])
         
         case 'fuck around':
             sizes = [50000, 100000, 200000, 500000, 1000000]
