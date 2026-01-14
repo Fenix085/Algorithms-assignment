@@ -145,7 +145,7 @@ def boxplot(metric_to_values, title, ylabel, path):
 
 
 if __name__ == "__main__":
-    trials = 3
+    trials = 30
     m = 17
     n = 2**m - 1
 
