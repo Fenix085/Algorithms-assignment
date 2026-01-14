@@ -3,7 +3,7 @@ from vector import Vector
 from linked_list import LinkedList
 import time
 import random
-from statistics import mean
+from statistics import median
 import csv
 import matplotlib.pyplot as plt
 import gc
@@ -23,7 +23,7 @@ def measure(algo, n, reps=30):
         algo(arr_copy)
         end = time.perf_counter()
         times.append(end - start)
-    return mean(times)
+    return median(times)
 
 def create_key(row):
     mm, yyyy = row["Expiry Date"].split('/')
