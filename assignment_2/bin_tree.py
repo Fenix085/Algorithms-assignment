@@ -77,6 +77,17 @@ class BinaryTree:
         self.root = None
         self.size = 0
 
+    def height(self, node=None):
+        if node is None:
+            node = self.root
+        
+        def _height(n):
+            if n is None:
+                return 0
+            return 1 + max(_height(n.left), _height(n.right))
+        
+        return _height(node)
+
     def inorder(self, curr=None):
         if curr is None:
             curr = self.root
@@ -103,5 +114,6 @@ if __name__ == "__main__":
     oTree.add(6)
     oTree.add(8)
     print("inorder:", oTree.inorder(oTree.root))
+    print("height:", oTree.height())
     oTree.remove(5)
     print("inorder after removing 5:", oTree.inorder(oTree.root))
