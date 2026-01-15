@@ -127,7 +127,7 @@ if __name__ == "__main__":
                                 ('stalin', oSorter.stalinSort),
                                 ('communizm', oSorter.communizmSort),
                                 ('heap', oSorter.heapSort)]:
-                    avg = measure(func, n)
+                    avg = measure(func, n, reps = 100)
                     results[name].append(avg)
                     print(f"{name} n={n}: {avg:.6f} s")
            
@@ -263,7 +263,7 @@ if __name__ == "__main__":
                 for name, func in [('1-pivot', oSorter.quickSort),
                                 ('2-pivot', oSorter.dualPivotQuickSort),
                                 ('3-pivot', oSorter.triplePivotQuickSort)]:
-                    avg = measure(func, n)
+                    avg = measure(func, n, reps = 100)
                     results[name].append(avg)
                     print(f"{name} n={n}: {avg:.6f} s")
            
