@@ -7,3 +7,4 @@
 
 Results of the first assignment are saved in assignment\_1/results/ as sorting_results.csv, carddump2_sorted.csv and carddump_sorted_full.csv
 
+Results of the second assignment are saved in assignment\_2/results/
